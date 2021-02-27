@@ -8,3 +8,4 @@
 4. [MS Docs: Asynchronous programming with async and await](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/)
 5. [MS Docs: Async in Depth](https://docs.microsoft.com/en-us/dotnet/standard/async-in-depth)
 6. [MS Docs: Async](https://docs.microsoft.com/en-us/dotnet/csharp/async)
+7. [Configure Await](https://devblogs.microsoft.com/dotnet/configureawait-faq/)
