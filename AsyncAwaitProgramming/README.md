@@ -1,5 +1,6 @@
-# Async Programming
-## Summary
+# Async Await Programming
+
+## 3 Main Lessons 
 1. How ``async-await`` works
    1. First ``await``, control is yielded back to the caller whether that's a method or the message loop.
    2. The awaited Task is allocated on the heap.
