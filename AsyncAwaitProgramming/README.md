@@ -6,6 +6,7 @@
    3. Once the awaited Task completes, it forces the message pump to resume control. 
    4. The underlying mechanism of ``async-await`` is a State Machine and an AsyncTaskMethodBuilder that the compiler automatically generates in the case it observes ``async`` in the method signature.
 2. ``Async`` code is Non-Blocking.
+3. For I/O bound code, use ``async-await``; for CPU bound code, ``await Task.Run(...)``.
 
 ## Resources Referenced 
 
@@ -20,5 +21,3 @@
 5. [David Fowler's Notes](https://github.com/davidfowl/AspNetCoreDiagnosticScenarios/blob/0ba7625050f975f8a7df1df57c80ad08da250541/AsyncGuidance.md) 
 6. [There is No Thread](https://blog.stephencleary.com/2013/11/there-is-no-thread.html)
 7. [6 Essential Tips for Async Programming - Channel 9](https://channel9.msdn.com/Series/Three-Essential-Tips-for-Async)
-8. [Configure Await](https://devblogs.microsoft.com/dotnet/configureawait-faq/)
-9. [Jet Brain's Tools](https://blog.jetbrains.com/dotnet/2019/01/24/best-practices-building-async-apis-asp-net-core-webinar-recording/)
