@@ -18,3 +18,7 @@ Inspired by Carl Newport's [Deep Work](https://www.amazon.com/Deep-Work-Focused-
    5. No songs with lyrics - only instrumental music. 
 3. Ritualize End
    1. Make sure notes are up to date.
+
+# Misc
+
+1. Work Accomplished = Time Spent x Intensity of Focus
