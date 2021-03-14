@@ -14,6 +14,6 @@
       3. throttling 
 
 ## Resources Referenced
-1. Chapter 1: Concurrency: An Overview
-2. Chapter 9: Collections
-3. Chapter 12: Synchronization
+1. Chapter 1: Concurrency: An Overview - [Notes](1.md)
+2. Chapter 9: Collections - [Notes](2.md)
+3. Chapter 12: Synchronization - [Notes](3.md)
