@@ -5,6 +5,7 @@ Inspired by Carl Newport's [Deep Work](https://www.amazon.com/Deep-Work-Focused-
 1. [Async Await Programming in Dot Net](AsyncAwaitProgrammingInDotNet/README.md)
 2. [Morningstar's Investment Classroom](MorningStarInvestorClassroom/README.md)
 3. [Thread Pool Starvation](ThreadPoollStarvationInDotNet/README.md)
+4. [Host Execution Context Manager and Execution Contexts](HostExecutionContextManager/README.md)
 
 # Rules
 1. Ritualize Start
