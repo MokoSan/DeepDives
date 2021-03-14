@@ -4,9 +4,9 @@ Inspired by Carl Newport's [Deep Work](https://www.amazon.com/Deep-Work-Focused-
 # Done So Far
 1. [Async Await Programming in Dot Net](AsyncAwaitProgrammingInDotNet/README.md)
 2. [Morningstar's Investment Classroom](MorningStarInvestorClassroom/README.md)
+3. [Concurrency In Dot Net](ConcurrencyInDotNet/README.md)
 
 # Rules
-
 1. Ritualize Start
    1. Set intentions.
    2. Note time.
@@ -20,5 +20,4 @@ Inspired by Carl Newport's [Deep Work](https://www.amazon.com/Deep-Work-Focused-
    1. Make sure notes are up to date.
 
 # Misc
-
 1. Work Accomplished = Time Spent x Intensity of Focus
