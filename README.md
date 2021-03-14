@@ -6,6 +6,7 @@ Inspired by Carl Newport's [Deep Work](https://www.amazon.com/Deep-Work-Focused-
 2. [Morningstar's Investment Classroom](MorningStarInvestorClassroom/README.md)
 3. [Thread Pool Starvation](ThreadPoollStarvationInDotNet/README.md)
 4. [Host Execution Context Manager and Execution Contexts](HostExecutionContextManager/README.md)
+5. [Concurrency In C# Book Notes](ConcurrencyInC#Book/README.md)
 
 # Rules
 1. Ritualize Start
