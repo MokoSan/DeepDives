@@ -77,3 +77,10 @@
          1. Prevention of reordering.
          2. There is an advantage to grouping necessary memory barriers in that buffers flushed after the first one will be less costly because no work will be under way to refill them.
    7. .NET / Java -> read and write of a ``volatile`` field implements read and write barriers.
+   8. __Cache Lines__
+      1. Hardware doesn't move memory in bytes / words but a collection of words as a part of cache lines.
+         1. The most common cache lines are 64 bytes.
+         2. Level of granularity at which cache coherence protocols operate.
+      2. __False Sharing__: When two or more threads that are running simultaneously attempt to access information in the same cache line. These present the same problems as write contention.
+      3. For high performance then, it is important to ensure that independent, but concurrently written, variables do not share the same cache-line if contention is to be minimized.
+      4. 
