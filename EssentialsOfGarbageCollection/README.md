@@ -131,3 +131,14 @@
          1. Most optimized search algorithm used in production allocators.
          2. Heap is partitioned and grouped based on size e.g. Segregated List of Size 8, 16, 32, 64 etc.
          3. Multiple free lists containing blocks of a certain size.
+
+### 7. Semantic vs. Syntactic Garbage
+1. __Semantic Garbage__
+   1. Data that will not be reached.
+   2. Strong references to unused but live data aka "Live Garbage"
+   3. Bugs in the program logic.
+   4. Example: Non-Invalidated Caches.
+2. __Syntactic Garbage__
+   1. Data that cannot be reached. 
+   2. Unreachable objects with no references to them.
+   3. GC works only with syntactic garbage.
