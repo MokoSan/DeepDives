@@ -142,3 +142,85 @@
    1. Data that cannot be reached. 
    2. Unreachable objects with no references to them.
    3. GC works only with syntactic garbage.
+
+## Garbage Collectors
+
+### 1. Tracing vs. Direct Collectors
+1. __Tracing Collectors__
+   1. Tracing Collectors scan the heap for live objects and everything else by extension is treated as garbage.
+   2. Analysis starts at the GC Root that could be held by a register, global or stack variable.
+   3. Traversal path of the live objects on the heap from the roots is called the Trace.
+   4. For __Stop the world__ where all mutator threads are blocked, the trace happens during the pause.
+   5. For concurrent GC algorithms, the trace happens in parallel with the mutator threads. 
+2. __Direct Collectors__
+   1. Garbage is reclaimed exactly at the moment it is identified.
+   2. There is no explicit GC Pause.
+   3. Direct Collectors are deeply integrated into the mutator.
+   4. No tracing is done via direct collectors.
+   5. Reference counting is used.
+3. __4 Most Used Collectors__
+   1. __Mark-Sweep__
+   2. __Mark-Compact__
+   3. __Copying GC__
+   4. __Reference Counting__
+4. Mark-Sweep, Mark-Compact, Copying GC are all __Tracing Collectors__ while Reference Counting is a __Direct Collector__.
+
+### 2. Mark-Sweep Collector
+1. __Type__: Tracing Collector that searches for live objects and everything else is garbage.
+2. __Phases__
+   1. __Mark__: Trace for live objects.
+      1. From the roots, goes to all children and sets the mark bit that's available in the object header to 1.
+   2. __Sweep__: Reclaims the garbage.
+      1. Traverses the entire heap to check if the mark bit is set.
+      2. If the mark bit is set, it is unset for the subsequent GC.
+      3. If the mark bit is unset, the object is a candidate for GC and it's added to the free-list.
+3. __Moving__: Objects aren't moved.
+   1. This is good for languages exposing pointer semantics such as C/C++
+4. __Allocator__:
+   1. The allocations are added to a free-list.
+   2. These result in slower allocations as the next allocation block must be found.
+5. __Issues__:
+   1. __Fragmentation__: Next free block might be further away over the heap.
+      1. Results in slower allocations.
+      2. Bad cache locality.
+6. __Pseudo-Code__
+
+__Mark__:
+
+```
+to_scan = roots
+
+while !to_scan.is_empty():
+   pointer = to_scan.peak()
+
+   # Check if the mark bit isn't set
+   # Then subsequently set it for this live object.
+   if pointer.get_markbit() == 0:
+      pointer.set_markbit()
+
+      # Add all the children that this live object is pointing to.
+      for child in pointer.children():
+         to_scan.add(child)
+```
+
+__Sweep__:
+
+```
+# Traverse the entire heap.
+heap_runner = heap.start()
+
+while heap_runner < heap.end():
+
+   # If the current object has the mark bit set, reset it for the next GC.
+   if heap_runner.is_set_markbit():
+      heap_runner.reset_markbit()
+
+   # If the current object doesn't have the mark bit set, add it to free list to be reused.
+   else:
+      add_to_freelist(heap_runner)
+
+   # Increment the heap runner to the next object.
+   heap_runner = heap_runner.next()
+```
+
+### 3. Mark-Compact Collector
