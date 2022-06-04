@@ -95,7 +95,7 @@
    3. Collector closely communicates with the allocator
       1. Synchronizing on the Object Header structure to update the metadata associated the allocations.
    4. Mutator may not know that the collector exists as it interacts primarily with the allocator.
-   5. Some languages expose APIs to directly interact with the collecotr.
+   5. Some languages expose APIs to directly interact with the collector.
       1. ``System.gc()`` in Java.
       2. ``gc.collect()`` in Python.
 5. __Stop The World__: The state the mutator is put in when the collector starts its work. All the threads are put to sleep for the process of collection to take place.
@@ -224,3 +224,123 @@ while heap_runner < heap.end():
 ```
 
 ### 3. Mark-Compact Collector
+1. Advantages because of compaction that results in less fragmentation:
+   1. Better cache locality. 
+   2. Faster allocation.
+      1. We get to use the Bump Allocator after compaction.
+2. Mark-Compact is an in-place collector.
+3. __Type__: Tracing Collector.
+   1. With GC Pauses.
+4. __Phases__
+   1. __Mark__: Marking phase is exactly the same as the Mark-Sweep collector. Trace of the live objects is done.
+      1. Object header also stores the forwarding address or the new address where the object is moved.
+   2. __Compact__: Relocation or moving live objects to the new forwarding address.
+      1. To avoid fragmentation.
+5. __Moving__
+   1. Can't be used by languages exposing pointer semantics such as C/C++.
+6. __Allocator__
+   1. Sequential aka "Bump Allocator"
+7. __Disadvantages__
+   1. Up to 3x Heap Traversal.
+8. __Several Mark-Compact Algorithms__
+   1. Two Finger
+   2. The LISP 2 <- Most Used In Practice
+   3. Threaded
+   4. One pass
+9.  __LISP 2 Mark-Compact Algorithm__
+   5. __Steps__: All require a full heap reversal. This is the price to pay for the fast compacted heap and allocation.
+      1. __Compute Locations__
+         1. 3 pointers used to get the locations:
+            1. __Free Pointer__: Pointer of the position where the next scanned alive pointer will be relocated.
+            2. __Scan Pointer__: Pointer used for analyzing the dead and alive objects.
+            3. __End Pointer__: Pointer pointing to the end of the heap.
+         2. The idea here is to populate the forwarding address of each of the blocks based on the traversal.
+      2. __Update References__: Fixing the child references of alive objects to point to the new locations. 
+         1. __Steps__
+            1. Go through the roots.
+            2. Go through all the children and set those to the new addresses.
+      3. __Relocate__: Move alive objects to the new locations recorded in the forwarding addresses.
+10. __Pseudo-Code of Compact__
+
+__Compact__
+```
+compact():
+   compute_locations()
+   update_references()
+   relocate()
+```
+
+__Compute Location__
+
+```
+compute_location():
+   scan = start_of_heap()
+   free = start_of_heap()
+
+   # Traverse the entire heap.
+   while scan < end:
+
+      # If the object is marked i.e. alive. update the reference to the free pointer.
+      if scan.get_markbit() == 1:
+         *scan.forward = free
+         # Move the free pointer to the next spot.
+         free = free.next
+
+      scan = scan.next
+```
+
+__Update References__
+
+```
+update_references():
+   for root in roots:
+      if root != null:
+         root = root.forward
+   
+   scan = start
+   while scan < end:
+      if scan.get_markbit() == 1:
+         for child in scan.get_children():
+            if child != null:
+               child = child.forward
+      scan = scan.next
+```
+
+__Relocate__
+
+```
+relocate():
+   scan = start_of_heap()
+   while scan < end:
+      if scan.get_markbit() == 1:
+         scan.reset_markbit()
+         move(scan, scan.forward)
+      scan = scan.next
+```
+
+### 4. Copying Collector aka Semi Space Collector
+1. Storage for speed is the trade off here.
+2. Half the heap is reserved for collection purposes aka Semi-space collector.
+3. Area used for allocation is called "From Space" or "Old Space".
+   1. Only spot where allocations are allowed.
+4. Area used for garbage collector is called "To Space" or "New Space".
+5. We can run into OOM (Out of Memory) if we use up entire From Space even though we have the entire New Space available.
+6. __Stages__
+   1. __Copy__: Aka Evacuation - Evacuate live objects. 
+      1. Copying the live data starting from the roots, from the From area to the To area. 
+   2. __Forward__
+      1. Keeping forward address
+
+
+
+## Advanced Topics
+
+
+### 4. Tri-color Abstraction
+
+
+### 5. GC Barriers
+1. __Barrier__: An extra fragment of code executed on certain mutator events. 
+2. Two Types of Barriers
+   1. Read
+   2. Write
